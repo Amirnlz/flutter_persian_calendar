@@ -1,7 +1,8 @@
 name: flutter_persian_calendar
 description: >
-  Flutter package for Persian (Jalali) calendar integration. 
-  Customize appearance, filter dates, and simplify selection.
+  Flutter package for easy integration of Persian (Jalali) calendar widgets. 
+  Customize appearance, filter dates, and simplify date selection. 
+  Ideal for projects requiring localized calendar functionality.
 version: 0.0.1
 repository: https://github.com/Amirnlz/flutter_persian_calendar
 homepage: https://github.com/Amirnlz/flutter_persian_calendar
