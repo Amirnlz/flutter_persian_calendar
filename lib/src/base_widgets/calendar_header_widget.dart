@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../header/selected_value_box.dart';
 import '../theme/shamsi_date_picker_theme.dart';
 
-class DatePickerHeader extends StatelessWidget {
-  const DatePickerHeader({
+class CalendarHeaderWidget extends StatelessWidget {
+  const CalendarHeaderWidget({
     Key? key,
     required this.year,
     required this.monthNumber,

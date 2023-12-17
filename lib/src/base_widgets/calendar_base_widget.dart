@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../utils/constants.dart';
 import '../theme/shamsi_date_picker_theme.dart';
-import 'date_picker_header.dart';
+import 'calendar_header_widget.dart';
 
-class DatePickerBase extends StatelessWidget {
-  const DatePickerBase({
+class CalendarBaseWidget extends StatelessWidget {
+  const CalendarBaseWidget({
     Key? key,
     required this.calendarHeight,
     required this.calendarWidth,
@@ -41,7 +41,7 @@ class DatePickerBase extends StatelessWidget {
         ),
         child: Column(
           children: [
-            DatePickerHeader(
+            CalendarHeaderWidget(
               year: year,
               monthNumber: monthNumber,
               onMonthHeaderTapped: onMonthHeaderTapped,

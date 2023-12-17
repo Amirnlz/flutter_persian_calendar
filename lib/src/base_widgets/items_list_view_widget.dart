@@ -6,6 +6,7 @@ class ItemsListViewWidget extends StatelessWidget {
   const ItemsListViewWidget({
     Key? key,
     this.scrollController,
+    this.bottomPaddingSize = 16,
     required this.itemsCount,
     required this.maxPerRow,
     required this.indexItemWidget,
@@ -14,6 +15,7 @@ class ItemsListViewWidget extends StatelessWidget {
   }) : super(key: key);
 
   final ScrollController? scrollController;
+  final double bottomPaddingSize;
   final int itemsCount;
   final int maxPerRow;
   final Widget Function(int index) indexItemWidget;
@@ -32,8 +34,8 @@ class ItemsListViewWidget extends StatelessWidget {
         controller: scrollController,
         shrinkWrap: true,
         itemCount: numRows,
-        separatorBuilder: (context, index) => const Padding(
-          padding: EdgeInsets.only(bottom: 16),
+        separatorBuilder: (context, index) => Padding(
+          padding: EdgeInsets.only(bottom: bottomPaddingSize),
         ),
         itemBuilder: (context, rowIndex) {
           final start = rowIndex * maxPerRow;
