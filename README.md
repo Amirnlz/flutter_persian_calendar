@@ -36,6 +36,9 @@ import  'package:flutter_persian_calendar/flutter_persian_calendar.dart';
 check example to use:
 
 ```dart
+//import package at top of class
+import  'package:flutter_persian_calendar/flutter_persian_calendar.dart';
+
  //Create a button to user tap on it and show calendar to select date
 ElevatedButton(
    onPressed: () {
@@ -60,18 +63,19 @@ ElevatedButton(
     PersianCalendarTheme calendarTheme,
   ) {
     return PersianCalendar(
-      calendarHeight: 376,
-      calendarWidth: 360,
-      selectedDate: selectedDate,
+      calendarHeight: 376, //set height of calendar widget to 376
+      calendarWidth: 360, //set width of calendar widget to 360
+      selectedDate: selectedDate, // the selected date shown in initializing calendar widget
       onDateChanged: (newDate) {
-          selectedDate = newDate;
+        // type of newDate and selectedDate should be Jalali
+          selectedDate = newDate; // set the selectedDate to new selected date
       },
       onConfirmButtonPressed: () {
-        Navigator.pop(context);
+        Navigator.pop(context); // pop widget when user press on confirm button
       },
-      datePickerStartDate: Jalali(1300, 4, 12),
-      datePickerEndDate: Jalali(1402, 7, 10),
-      calendarTheme: calendarTheme,
+      calendarStartDate: Jalali(1300, 4, 12), // show calendar from 1300/4/12
+      calendarEndDate: Jalali(1402, 7, 10), // show calendar until 1402/7/10
+      calendarTheme: calendarTheme, // set calendarTheme that is passed here
     );
   }
 
@@ -82,6 +86,7 @@ ElevatedButton(
 You can change colors, textStyle, and the height and width of items in `PersianCalendarTheme`. Here is a customized lightTheme:
 
 ```dart
+ // Model of calendar Theme
 PersianCalendarTheme(
   backgroundColor: const Color(0XFFEDF2F4),
   selectedColor: const Color(0XFFEF233C),
