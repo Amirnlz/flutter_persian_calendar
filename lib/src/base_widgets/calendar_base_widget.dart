@@ -6,7 +6,7 @@ import 'calendar_header_widget.dart';
 
 class CalendarBaseWidget extends StatelessWidget {
   const CalendarBaseWidget({
-    Key? key,
+    super.key,
     required this.calendarHeight,
     required this.calendarWidth,
     required this.shamsiDatePickerTheme,
@@ -15,7 +15,7 @@ class CalendarBaseWidget extends StatelessWidget {
     required this.onMonthHeaderTapped,
     required this.onYearHeaderTapped,
     required this.child,
-  }) : super(key: key);
+  });
 
   final double calendarHeight;
   final double calendarWidth;

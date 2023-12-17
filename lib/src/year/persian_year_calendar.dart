@@ -6,13 +6,13 @@ import '../theme/shamsi_date_picker_theme.dart';
 
 class PYearCalendar extends StatefulWidget {
   const PYearCalendar({
-    Key? key,
+    super.key,
     required this.selectedYear,
     required this.startYearFrom,
     required this.endYearAt,
     required this.onYearChanged,
     required this.calendarTheme,
-  }) : super(key: key);
+  });
   final int selectedYear;
   final int startYearFrom;
   final int endYearAt;

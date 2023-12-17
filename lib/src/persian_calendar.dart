@@ -10,7 +10,7 @@ import 'year/persian_year_calendar.dart';
 
 class PersianCalendar extends StatefulWidget {
   const PersianCalendar({
-    Key? key,
+    super.key,
     required this.selectedDate,
     required this.datePickerStartDate,
     required this.datePickerEndDate,
@@ -20,16 +20,33 @@ class PersianCalendar extends StatefulWidget {
     required this.calendarTheme,
     this.confirmButtonText = 'تایید',
     required this.onConfirmButtonPressed,
-  }) : super(key: key);
+  });
 
+  /// The selected date in the calendar.
   final Jalali selectedDate;
+
+  /// The Calendar start from this date
   final Jalali datePickerStartDate;
+
+  /// The Calendar ends to this date
   final Jalali datePickerEndDate;
+
+  /// The height of the calendar widget.
   final double calendarHeight;
+
+  /// The width of the calendar widget.
   final double calendarWidth;
+
+  /// On every time user change date
   final ValueChanged<Jalali> onDateChanged;
+
+  /// The calendar theme for customize
   final PersianCalendarTheme calendarTheme;
+
+  /// The confirm button text shown in day widget
   final String confirmButtonText;
+
+  /// Called when user pressed on Confirm button
   final VoidCallback onConfirmButtonPressed;
 
   @override

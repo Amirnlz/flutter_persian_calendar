@@ -7,7 +7,7 @@ import 'day_confirmation_button.dart';
 
 class PDayCalendar extends StatelessWidget {
   const PDayCalendar({
-    Key? key,
+    super.key,
     required this.selectedDay,
     required this.startDay,
     required this.endDay,
@@ -15,7 +15,7 @@ class PDayCalendar extends StatelessWidget {
     required this.calendarTheme,
     required this.confirmButtonText,
     required this.onConfirmButtonPressed,
-  }) : super(key: key);
+  });
   final int selectedDay;
   final int startDay;
   final int endDay;

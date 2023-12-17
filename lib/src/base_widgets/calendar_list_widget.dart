@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CalendarListWidget extends StatelessWidget {
   const CalendarListWidget({
-    Key? key,
+    super.key,
     required this.columnItemNumber,
     required this.itemsCount,
     required this.itemHeight,
@@ -10,7 +10,7 @@ class CalendarListWidget extends StatelessWidget {
     this.padding,
     this.controller,
     this.physics,
-  }) : super(key: key);
+  });
   final int columnItemNumber;
   final int itemsCount;
   final double itemHeight;

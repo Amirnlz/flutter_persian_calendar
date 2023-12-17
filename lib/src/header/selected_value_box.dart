@@ -4,13 +4,13 @@ import '../utils/constants.dart';
 
 class SelectedValueBox extends StatelessWidget {
   const SelectedValueBox({
-    Key? key,
+    super.key,
     this.height,
     this.width,
     required this.text,
     required this.textStyle,
     required this.boxColor,
-  }) : super(key: key);
+  });
   final double? height;
   final double? width;
   final String text;
@@ -38,12 +38,12 @@ class SelectedValueBox extends StatelessWidget {
 
 class MonthContainer extends StatelessWidget {
   const MonthContainer({
-    Key? key,
+    super.key,
     required this.monthNumber,
     required this.onTap,
     required this.textStyle,
     required this.boxColor,
-  }) : super(key: key);
+  });
   final int monthNumber;
   final VoidCallback onTap;
   final TextStyle textStyle;
@@ -67,12 +67,12 @@ class MonthContainer extends StatelessWidget {
 
 class YearContainer extends StatelessWidget {
   const YearContainer({
-    Key? key,
+    super.key,
     required this.yearNumber,
     required this.onTap,
     required this.textStyle,
     required this.boxColor,
-  }) : super(key: key);
+  });
   final String yearNumber;
   final VoidCallback onTap;
   final TextStyle textStyle;

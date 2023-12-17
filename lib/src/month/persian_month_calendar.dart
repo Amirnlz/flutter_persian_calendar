@@ -7,13 +7,13 @@ import '../utils/constants.dart';
 
 class PMonthCalendar extends StatelessWidget {
   const PMonthCalendar({
-    Key? key,
+    super.key,
     required this.selectedMonth,
     required this.startMonth,
     required this.endMonth,
     required this.onMonthChanged,
     required this.calendarTheme,
-  }) : super(key: key);
+  });
   final int selectedMonth;
   final int startMonth;
   final int endMonth;

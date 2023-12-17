@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class DayConfirmationButton extends StatelessWidget {
   const DayConfirmationButton({
-    Key? key,
+    super.key,
     required this.buttonColor,
     required this.buttonTextStyle,
     required this.onConfirmButtonPressed,
     required this.confirmButtonText,
-  }) : super(key: key);
+  });
   final Color buttonColor;
   final TextStyle buttonTextStyle;
   final VoidCallback onConfirmButtonPressed;

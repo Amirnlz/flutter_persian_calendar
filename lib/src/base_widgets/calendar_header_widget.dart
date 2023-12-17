@@ -5,13 +5,13 @@ import '../theme/shamsi_date_picker_theme.dart';
 
 class CalendarHeaderWidget extends StatelessWidget {
   const CalendarHeaderWidget({
-    Key? key,
+    super.key,
     required this.year,
     required this.monthNumber,
     required this.onMonthHeaderTapped,
     required this.onYearHeaderTapped,
     required this.calendarTheme,
-  }) : super(key: key);
+  });
 
   final int year;
   final int monthNumber;

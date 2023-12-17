@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ItemBox extends StatelessWidget {
   const ItemBox({
-    Key? key,
+    super.key,
     required this.itemTitle,
     required this.itemNumber,
     required this.isItemSelected,
@@ -11,7 +11,7 @@ class ItemBox extends StatelessWidget {
     required this.itemWidth,
     required this.selectedColor,
     required this.textStyle,
-  }) : super(key: key);
+  });
   final String itemTitle;
   final int itemNumber;
   final bool isItemSelected;

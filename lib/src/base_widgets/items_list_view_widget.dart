@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ItemsListViewWidget extends StatelessWidget {
   const ItemsListViewWidget({
-    Key? key,
+    super.key,
     this.scrollController,
     this.bottomPaddingSize = 16,
     required this.itemsCount,
@@ -12,7 +12,7 @@ class ItemsListViewWidget extends StatelessWidget {
     required this.indexItemWidget,
     required this.textDirection,
     this.emptyBoxWidget,
-  }) : super(key: key);
+  });
 
   final ScrollController? scrollController;
   final double bottomPaddingSize;

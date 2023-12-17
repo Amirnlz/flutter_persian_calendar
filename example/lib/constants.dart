@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_persian_calendar/flutter_persian_calendar.dart';
 
+// An example of darkTheme for PersianCalendarTheme in PersianCalendar
 final calendarDarkTheme = PersianCalendarTheme(
   textStyle: const TextStyle(
     fontSize: 14,
@@ -12,6 +13,7 @@ final calendarDarkTheme = PersianCalendarTheme(
   ),
 );
 
+// An example of lightTheme for PersianCalendarTheme in PersianCalendar
 final calendarLightTheme = PersianCalendarTheme(
   backgroundColor: const Color(0XFFEDF2F4),
   selectedColor: const Color(0XFFEF233C),
