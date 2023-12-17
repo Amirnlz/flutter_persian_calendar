@@ -23,6 +23,7 @@ class PMonthCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ItemsListViewWidget(
+      bottomPaddingSize: calendarTheme.monthItemWidth / 2,
       maxPerRow: 3,
       itemsCount: monthCount,
       emptyBoxWidget: SizedBox(

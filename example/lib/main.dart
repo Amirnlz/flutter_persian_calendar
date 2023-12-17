@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Jalali selectedDate = Jalali(1376, 1, 1);
+  Jalali selectedDate = Jalali(1360, 1, 1);
 
   @override
   Widget build(BuildContext context) {

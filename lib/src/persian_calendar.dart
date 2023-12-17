@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
-import 'base_widgets/date_picker_base.dart';
+import 'base_widgets/calendar_base_widget.dart';
 import 'day/persian_day_calendar.dart';
 import 'month/persian_month_calendar.dart';
 import 'theme/shamsi_date_picker_theme.dart';
@@ -48,7 +48,7 @@ class _PersianCalendarState extends State<PersianCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return DatePickerBase(
+    return CalendarBaseWidget(
       calendarHeight: widget.calendarHeight,
       calendarWidth: widget.calendarWidth,
       shamsiDatePickerTheme: widget.calendarTheme,
