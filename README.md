@@ -2,14 +2,12 @@
 
 ![Persian Calendar Banner](sceenshots/darkTheme.png)
 
-This package offers a simple and customizable Persian calendar widget to integrate into your Flutter project. It is designed to make it easy for developers to include a Persian calendar in their applications.
-
-This package based on [shamsi_date](https://pub.dev/packages/shamsi_date)
+This Flutter package provides a simple and customizable Persian calendar widget for easy integration into your Flutter project. The package is based on [shamsi_date](https://pub.dev/packages/shamsi_date).
 
 ## Features
 
-- Filter start and end date: You can add start-date and end-date to filter showing dates
-- Customization Option: Tailor the appearance of the calendar to fit your application's theme with customizable options.
+- **Filter Start and End Date:** You can add start-date and end-date to filter showing dates.
+- **Customization Options:** Tailor the appearance of the calendar to fit your application's theme with customizable options.
 
 ## Usage
 
@@ -75,7 +73,7 @@ ElevatedButton(
 
 ## Customization
 
-You can change colors and textStyle and height and width of items  in `PersianCalendarTheme` here is a customized lightTheme:
+You can change colors, textStyle, and the height and width of items in `PersianCalendarTheme`. Here is a customized lightTheme:
 
 ```dart
 PersianCalendarTheme(
@@ -122,3 +120,5 @@ If you encounter any issues with the package or have suggestions for improvement
 4. Commit your changes: `git commit -m 'Add some feature'`.
 5. Push to the branch: `git push origin feature/my-feature`.
 6. Submit a pull request.
+
+Feel free to use or modify this version based on your preferences!
