@@ -4,8 +4,8 @@ import '../base_widgets/item_box.dart';
 import '../base_widgets/items_list_view_widget.dart';
 import '../theme/shamsi_date_picker_theme.dart';
 
-class ShamsiYearPicker extends StatefulWidget {
-  const ShamsiYearPicker({
+class PYearCalendar extends StatefulWidget {
+  const PYearCalendar({
     Key? key,
     required this.selectedYear,
     required this.startYearFrom,
@@ -20,10 +20,10 @@ class ShamsiYearPicker extends StatefulWidget {
   final PersianCalendarTheme calendarTheme;
 
   @override
-  State<ShamsiYearPicker> createState() => _ShamsiYearPickerState();
+  State<PYearCalendar> createState() => _PYearCalendarState();
 }
 
-class _ShamsiYearPickerState extends State<ShamsiYearPicker> {
+class _PYearCalendarState extends State<PYearCalendar> {
   final int yearMaxPerRow = 3;
   late ScrollController _scrollController;
 
@@ -53,15 +53,17 @@ class _ShamsiYearPickerState extends State<ShamsiYearPicker> {
       ),
       indexItemWidget: (index) {
         final yearItem = widget.startYearFrom + index;
+        final isSelected = yearItem == widget.selectedYear;
+
         return ItemBox(
           itemTitle: yearItem.toString(),
           itemNumber: yearItem,
-          isItemSelected: yearItem == widget.selectedYear,
+          isItemSelected: isSelected,
           onItemNumberChanged: widget.onYearChanged,
           selectedColor: widget.calendarTheme.selectedColor,
           itemHeight: widget.calendarTheme.itemHeight,
           itemWidth: widget.calendarTheme.yearItemWidth,
-          textStyle: widget.calendarTheme.textStyle,
+          textStyle: textStyle(isSelected),
         );
       },
     );
@@ -83,4 +85,9 @@ class _ShamsiYearPickerState extends State<ShamsiYearPicker> {
         differenceYear * (widget.calendarTheme.itemHeight / 2.2);
     return scrollOffset;
   }
+
+  TextStyle textStyle(bool isSelected) =>
+      isSelected && widget.calendarTheme.selectedItemTextStyle != null
+          ? widget.calendarTheme.selectedItemTextStyle!
+          : widget.calendarTheme.textStyle;
 }

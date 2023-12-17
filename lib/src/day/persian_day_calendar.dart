@@ -5,8 +5,8 @@ import '../base_widgets/items_list_view_widget.dart';
 import '../theme/shamsi_date_picker_theme.dart';
 import 'day_confirmation_button.dart';
 
-class ShamsiDayPicker extends StatelessWidget {
-  const ShamsiDayPicker({
+class PDayCalendar extends StatelessWidget {
+  const PDayCalendar({
     Key? key,
     required this.selectedDay,
     required this.startDay,
@@ -39,26 +39,33 @@ class ShamsiDayPicker extends StatelessWidget {
             ),
             indexItemWidget: (index) {
               final dayItem = startDay + index;
+              final isSelected = dayItem == selectedDay;
               return ItemBox(
                 itemTitle: dayItem.toString(),
                 itemNumber: dayItem,
-                isItemSelected: dayItem == selectedDay,
+                isItemSelected: isSelected,
                 onItemNumberChanged: onDayChanged,
                 itemHeight: calendarTheme.itemHeight,
                 itemWidth: calendarTheme.dayItemWidth,
                 selectedColor: calendarTheme.selectedColor,
-                textStyle: calendarTheme.textStyle,
+                textStyle: textStyle(isSelected),
               );
             },
           ),
         ),
         DayConfirmationButton(
           buttonColor: calendarTheme.selectedColor,
-          buttonTextStyle: calendarTheme.textStyle,
+          buttonTextStyle:
+              calendarTheme.confirmButtonTextStyle ?? calendarTheme.textStyle,
           onConfirmButtonPressed: onConfirmButtonPressed,
           confirmButtonText: confirmButtonText,
         ),
       ],
     );
   }
+
+  TextStyle textStyle(bool isSelected) =>
+      isSelected && calendarTheme.selectedItemTextStyle != null
+          ? calendarTheme.selectedItemTextStyle!
+          : calendarTheme.textStyle;
 }

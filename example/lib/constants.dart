@@ -20,6 +20,14 @@ final calendarLightTheme = PersianCalendarTheme(
     fontSize: 14,
     color: Colors.black,
   ),
+  selectedItemTextStyle: const TextStyle(
+    fontSize: 14,
+    color: Color(0XFFF2F2F2),
+  ),
+  confirmButtonTextStyle: const TextStyle(
+    fontSize: 14,
+    color: Color(0XFFF2F2F2),
+  ),
   headerTextStyle: const TextStyle(
     fontSize: 14,
     color: Colors.black,

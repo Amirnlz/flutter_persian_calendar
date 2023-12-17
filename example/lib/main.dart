@@ -102,6 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
     PersianCalendarTheme calendarTheme,
   ) {
     return PersianCalendar(
+      calendarHeight: 376,
+      calendarWidth: 360,
       selectedDate: selectedDate,
       onDateChanged: (newDate) {
         setState(() {

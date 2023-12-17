@@ -5,8 +5,8 @@ import '../base_widgets/items_list_view_widget.dart';
 import '../theme/shamsi_date_picker_theme.dart';
 import '../utils/constants.dart';
 
-class ShamsiMonthPicker extends StatelessWidget {
-  const ShamsiMonthPicker({
+class PMonthCalendar extends StatelessWidget {
+  const PMonthCalendar({
     Key? key,
     required this.selectedMonth,
     required this.startMonth,
@@ -32,20 +32,26 @@ class ShamsiMonthPicker extends StatelessWidget {
       textDirection: TextDirection.rtl,
       indexItemWidget: (index) {
         final monthItem = startMonth + index;
+        final isSelected = monthItem == selectedMonth;
 
         return ItemBox(
           itemTitle: monthNames[monthItem - 1],
           itemNumber: monthItem,
-          isItemSelected: monthItem == selectedMonth,
+          isItemSelected: isSelected,
           onItemNumberChanged: onMonthChanged,
           itemHeight: calendarTheme.itemHeight,
           itemWidth: calendarTheme.monthItemWidth,
           selectedColor: calendarTheme.selectedColor,
-          textStyle: calendarTheme.textStyle,
+          textStyle: textStyle(isSelected),
         );
       },
     );
   }
 
   int get monthCount => endMonth - startMonth + 1;
+
+  TextStyle textStyle(bool isSelected) =>
+      isSelected && calendarTheme.selectedItemTextStyle != null
+          ? calendarTheme.selectedItemTextStyle!
+          : calendarTheme.textStyle;
 }
