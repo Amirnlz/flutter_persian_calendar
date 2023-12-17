@@ -2,6 +2,8 @@
 
 ![Persian Calendar Banner](https://github.com/Amirnlz/flutter_persian_calendar/raw/master/sceenshots/darkTheme.png)
 
+[![pub package](https://img.shields.io/pub/v/flutter_persian_calendar.svg?color=%23e67e22&label=pub&logo=flutter_persian_calendar)](https://pub.dev/packages/flutter_persian_calendar)
+
 This Flutter package provides a simple and customizable Persian calendar widget for easy integration into your Flutter project. The package is based on [shamsi_date](https://pub.dev/packages/shamsi_date).
 
 ## Features
@@ -16,7 +18,7 @@ Add it to your pubspec.yaml file:
 ```yaml
 dependencies:
 
-persian_datetime_picker: ^0.0.1
+persian_datetime_picker: ^0.0.2
 ```
 
 Then, run the following command in your terminal:
