@@ -1,0 +1,37 @@
+#
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: init
+        run: dart pub get
+      - name: format
+        run: dart format --output=none --set-exit-if-changed example lib test
+      - name: analyze
+        run: dart analyze
+      - name: test
+        run: dart test test/flutter_persian_calendar_test.dart
+      - name: run example
+        run: dart run example/lib/main.dart
+      - name: install coverage package
+        run: dart pub global activate coverage
+      - name: get test coverage
+        run: dart test test/shamsi_date_test.dart --coverage dart_coverage
+      - name: format test coverage
+        run: dart pub global run coverage:format_coverage -i dart_coverage -o coverage/lcov.info --lcov --packages=.dart_tool/package_config.json --report-on lib
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
