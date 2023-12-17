@@ -16,7 +16,7 @@ jobs:
         with:
           sdk: stable
       - name: init
-        run: dart pub get
+        run: flutter pub get
       - name: format
         run: dart format --output=none --set-exit-if-changed example lib test
       - name: analyze
