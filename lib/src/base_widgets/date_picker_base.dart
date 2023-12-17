@@ -7,8 +7,8 @@ import 'date_picker_header.dart';
 class DatePickerBase extends StatelessWidget {
   const DatePickerBase({
     Key? key,
-    required this.height,
-    required this.width,
+    required this.calendarHeight,
+    required this.calendarWidth,
     required this.shamsiDatePickerTheme,
     required this.year,
     required this.monthNumber,
@@ -17,8 +17,8 @@ class DatePickerBase extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
-  final double height;
-  final double width;
+  final double calendarHeight;
+  final double calendarWidth;
   final PersianCalendarTheme shamsiDatePickerTheme;
   final int year;
   final int monthNumber;
@@ -32,8 +32,8 @@ class DatePickerBase extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        height: height,
-        width: width,
+        height: calendarHeight,
+        width: calendarWidth,
         padding: kPadding,
         alignment: Alignment.center,
         decoration: BoxDecoration(

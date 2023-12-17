@@ -14,8 +14,8 @@ class PersianCalendar extends StatefulWidget {
     required this.selectedDate,
     required this.datePickerStartDate,
     required this.datePickerEndDate,
-    this.height = 360,
-    this.width = 376,
+    this.calendarHeight = 360,
+    this.calendarWidth = 376,
     required this.onDateChanged,
     required this.calendarTheme,
     this.confirmButtonText = 'تایید',
@@ -25,8 +25,8 @@ class PersianCalendar extends StatefulWidget {
   final Jalali selectedDate;
   final Jalali datePickerStartDate;
   final Jalali datePickerEndDate;
-  final double height;
-  final double width;
+  final double calendarHeight;
+  final double calendarWidth;
   final ValueChanged<Jalali> onDateChanged;
   final PersianCalendarTheme calendarTheme;
   final String confirmButtonText;
@@ -49,8 +49,8 @@ class _PersianCalendarState extends State<PersianCalendar> {
   @override
   Widget build(BuildContext context) {
     return DatePickerBase(
-      height: widget.height,
-      width: widget.width,
+      calendarHeight: widget.calendarHeight,
+      calendarWidth: widget.calendarWidth,
       shamsiDatePickerTheme: widget.calendarTheme,
       year: selectedDate.year,
       monthNumber: selectedDate.month,
