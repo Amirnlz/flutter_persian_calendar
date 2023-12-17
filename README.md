@@ -1,6 +1,6 @@
 # Flutter Persian Calendar: A Widget for Jalali (Persian) Date Display
 
-![Persian Calendar Banner](sceenshots/darkTheme.png)
+![Persian Calendar Banner](https://github.com/Amirnlz/flutter_persian_calendar/raw/master/sceenshots/darkTheme.png)
 
 This Flutter package provides a simple and customizable Persian calendar widget for easy integration into your Flutter project. The package is based on [shamsi_date](https://pub.dev/packages/shamsi_date).
 
@@ -108,7 +108,7 @@ PersianCalendarTheme(
 
 Output screenshot:
 
-![Persian Calendar Banner](sceenshots/lightTheme.png)
+![Persian Calendar Banner](https://github.com/Amirnlz/flutter_persian_calendar/raw/master/sceenshots/lightTheme.png)
 
 ## Contributions
 
