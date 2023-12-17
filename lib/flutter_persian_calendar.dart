@@ -1,7 +1,4 @@
 library flutter_persian_calendar;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/persian_calendar.dart';
+export 'src/theme/shamsi_date_picker_theme.dart';

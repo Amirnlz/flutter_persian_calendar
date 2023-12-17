@@ -1,7 +1,7 @@
 name: flutter_persian_calendar
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+# homepage:
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shamsi_date: ^1.0.2
 
 dev_dependencies:
   flutter_test:
