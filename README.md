@@ -1,39 +1,124 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Flutter Persian Calendar: A Widget for Jalali (Persian) Date Display
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+![Persian Calendar Banner](sceenshots/darkTheme.png)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+This package offers a simple and customizable Persian calendar widget to integrate into your Flutter project. It is designed to make it easy for developers to include a Persian calendar in their applications.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This package based on [shamsi_date](https://pub.dev/packages/shamsi_date)
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+- Filter start and end date: You can add start-date and end-date to filter showing dates
+- Customization Option: Tailor the appearance of the calendar to fit your application's theme with customizable options.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Add it to your pubspec.yaml file:
 
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+
+persian_datetime_picker: ^0.0.1
 ```
 
-## Additional information
+In your library add the following import:
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+
+import  'package:flutter_persian_calendar/flutter_persian_calendar.dart';
+
+```
+
+check example to use:
+
+```dart
+ //Create a button to user tap on it and show calendar to select date
+ElevatedButton(
+   onPressed: () {
+    //Show calendar in Dialog
+     showDialog(
+       context: context,
+       builder: (context) {
+         return Dialog(
+           child:
+               shamsiDateCalendarWidget(context, calendarDarkTheme),
+         );
+       },
+     );
+   },
+   child: const Text('Select Date'),
+ );
+
+//Can create a base Calendar widget to show with different Themes
+  PersianCalendar shamsiDateCalendarWidget(
+    BuildContext context,
+    //Pass different Theme
+    PersianCalendarTheme calendarTheme,
+  ) {
+    return PersianCalendar(
+      calendarHeight: 376,
+      calendarWidth: 360,
+      selectedDate: selectedDate,
+      onDateChanged: (newDate) {
+          selectedDate = newDate;
+      },
+      onConfirmButtonPressed: () {
+        Navigator.pop(context);
+      },
+      datePickerStartDate: Jalali(1300, 4, 12),
+      datePickerEndDate: Jalali(1402, 7, 10),
+      calendarTheme: calendarTheme,
+    );
+  }
+
+```
+
+## Customization
+
+You can change colors and textStyle and height and width of items  in `PersianCalendarTheme` here is a customized lightTheme:
+
+```dart
+PersianCalendarTheme(
+  backgroundColor: const Color(0XFFEDF2F4),
+  selectedColor: const Color(0XFFEF233C),
+  headerBackgroundColor: const Color(0XFF8D99AE),
+  textStyle: const TextStyle(
+    fontSize: 14,
+    color: Colors.black,
+  ),
+  selectedItemTextStyle: const TextStyle(
+    fontSize: 14,
+    color: Color(0XFFF2F2F2),
+  ),
+  confirmButtonTextStyle: const TextStyle(
+    fontSize: 14,
+    color: Color(0XFFF2F2F2),
+  ),
+  headerTextStyle: const TextStyle(
+    fontSize: 14,
+    color: Colors.black,
+  ),
+);
+
+```
+
+Output screenshot:
+
+![Persian Calendar Banner](sceenshots/lightTheme.png)
+
+## Contributions
+
+We welcome contributions from the community! If you'd like to contribute to the development of Flutter Persian Calendar, please follow these guidelines:
+
+### Reporting Issues
+
+If you encounter any issues with the package or have suggestions for improvements, please open an issue on the [GitHub issue tracker](https://github.com/Amirnlz/flutter_persian_calendar/issues). When reporting issues, please provide detailed information about the problem, including steps to reproduce it and your environment (Flutter version, platform, etc.).
+
+### Making Changes
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix: `git checkout -b feature/my-feature` or `git checkout -b bugfix/fix-issue`.
+3. Make your changes and test thoroughly.
+4. Commit your changes: `git commit -m 'Add some feature'`.
+5. Push to the branch: `git push origin feature/my-feature`.
+6. Submit a pull request.
