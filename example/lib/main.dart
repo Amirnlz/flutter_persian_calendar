@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Vazirmatn',
       ),
       home: const MyHomePage(
-        title: 'Flutter Demo Home Page',
+        title: 'Flutter Persian Calendar',
       ),
     );
   }
@@ -51,8 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Shamsi Date Calendar',
+              'Persian Calendar Widgets',
               style: TextStyle(
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -67,12 +68,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   context: context,
                   builder: (context) {
                     return Dialog(
-                      child: shamsiDateCalendarWidget(context),
+                      child:
+                          shamsiDateCalendarWidget(context, calendarDarkTheme),
                     );
                   },
                 );
               },
-              child: const Text('Select Date'),
+              child: const Text('Select Date(With Dark Theme)'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      child:
+                          shamsiDateCalendarWidget(context, calendarLightTheme),
+                    );
+                  },
+                );
+              },
+              child: const Text('Select Date(With Light Theme)'),
             ),
           ],
         ),
@@ -80,7 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  PersianCalendar shamsiDateCalendarWidget(BuildContext context) {
+  PersianCalendar shamsiDateCalendarWidget(
+    BuildContext context,
+    PersianCalendarTheme calendarTheme,
+  ) {
     return PersianCalendar(
       selectedDate: selectedDate,
       onDateChanged: (newDate) {
@@ -93,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       datePickerStartDate: Jalali(1300, 4, 12),
       datePickerEndDate: Jalali(1402, 7, 10),
-      calendarTheme: persianDarkTheme,
+      calendarTheme: calendarTheme,
     );
   }
 
