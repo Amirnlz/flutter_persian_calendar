@@ -18,7 +18,7 @@ Add it to your pubspec.yaml file:
 ```yaml
 dependencies:
 
-persian_datetime_picker: ^0.0.2
+flutter_persian_calendar: ^0.0.2
 ```
 
 Then, run the following command in your terminal:
