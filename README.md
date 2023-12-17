@@ -19,6 +19,12 @@ dependencies:
 persian_datetime_picker: ^0.0.1
 ```
 
+Then, run the following command in your terminal:
+
+```terminal
+flutter pub get
+```
+
 In your library add the following import:
 
 ```dart
