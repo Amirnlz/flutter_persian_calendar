@@ -113,8 +113,8 @@ class _MyHomePageState extends State<MyHomePage> {
       onConfirmButtonPressed: () {
         Navigator.pop(context);
       },
-      datePickerStartDate: Jalali(1300, 4, 12),
-      datePickerEndDate: Jalali(1402, 7, 10),
+      calendarStartDate: Jalali(1300, 4, 12),
+      calendarEndDate: Jalali(1402, 7, 10),
       calendarTheme: calendarTheme,
     );
   }

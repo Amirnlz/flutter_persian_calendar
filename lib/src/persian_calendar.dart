@@ -12,8 +12,8 @@ class PersianCalendar extends StatefulWidget {
   const PersianCalendar({
     super.key,
     required this.selectedDate,
-    required this.datePickerStartDate,
-    required this.datePickerEndDate,
+    required this.calendarStartDate,
+    required this.calendarEndDate,
     this.calendarHeight = 360,
     this.calendarWidth = 376,
     required this.onDateChanged,
@@ -26,10 +26,10 @@ class PersianCalendar extends StatefulWidget {
   final Jalali selectedDate;
 
   /// The Calendar start from this date
-  final Jalali datePickerStartDate;
+  final Jalali calendarStartDate;
 
   /// The Calendar ends to this date
-  final Jalali datePickerEndDate;
+  final Jalali calendarEndDate;
 
   /// The height of the calendar widget.
   final double calendarHeight;
@@ -86,8 +86,8 @@ class _PersianCalendarState extends State<PersianCalendar> {
       case DatePickerView.year:
         return PYearCalendar(
           selectedYear: selectedDate.year,
-          startYearFrom: widget.datePickerStartDate.year,
-          endYearAt: widget.datePickerEndDate.year,
+          startYearFrom: widget.calendarStartDate.year,
+          endYearAt: widget.calendarEndDate.year,
           onYearChanged: (selectedYear) {
             changeView(DatePickerView.month);
             changeSelectedDate(year: selectedYear);
@@ -143,32 +143,32 @@ class _PersianCalendarState extends State<PersianCalendar> {
   }
 
   int get startMonthDatePicker {
-    if (selectedDate.year == widget.datePickerStartDate.year) {
-      return widget.datePickerStartDate.month;
+    if (selectedDate.year == widget.calendarStartDate.year) {
+      return widget.calendarStartDate.month;
     } else {
       return 1;
     }
   }
 
   int get endMonthDatePicker {
-    if (selectedDate.year == widget.datePickerEndDate.year) {
-      return widget.datePickerEndDate.month;
+    if (selectedDate.year == widget.calendarEndDate.year) {
+      return widget.calendarEndDate.month;
     } else {
       return 12;
     }
   }
 
   int get startDayDatePicker {
-    if (selectedDate.year == widget.datePickerStartDate.year) {
-      return widget.datePickerStartDate.day;
+    if (selectedDate.year == widget.calendarStartDate.year) {
+      return widget.calendarStartDate.day;
     } else {
       return 1;
     }
   }
 
   int get endDayDatePicker {
-    if (selectedDate.year == widget.datePickerEndDate.year) {
-      return widget.datePickerEndDate.day;
+    if (selectedDate.year == widget.calendarEndDate.year) {
+      return widget.calendarEndDate.day;
     } else {
       return selectedDate.monthLength;
     }

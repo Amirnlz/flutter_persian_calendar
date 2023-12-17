@@ -25,7 +25,7 @@ class CalendarHeaderWidget extends StatelessWidget {
       children: [
         Expanded(
           flex: 2,
-          child: MonthContainer(
+          child: MonthNameLabel(
             monthNumber: monthNumber,
             onTap: onMonthHeaderTapped,
             textStyle: headerTextStyle,
@@ -35,7 +35,7 @@ class CalendarHeaderWidget extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           flex: 1,
-          child: YearContainer(
+          child: YearLabel(
             yearNumber: year.toString(),
             onTap: onYearHeaderTapped,
             textStyle: headerTextStyle,

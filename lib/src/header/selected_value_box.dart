@@ -36,8 +36,8 @@ class SelectedValueBox extends StatelessWidget {
   }
 }
 
-class MonthContainer extends StatelessWidget {
-  const MonthContainer({
+class MonthNameLabel extends StatelessWidget {
+  const MonthNameLabel({
     super.key,
     required this.monthNumber,
     required this.onTap,
@@ -65,8 +65,8 @@ class MonthContainer extends StatelessWidget {
   String get selectedMonthName => monthNames[monthNumber - 1];
 }
 
-class YearContainer extends StatelessWidget {
-  const YearContainer({
+class YearLabel extends StatelessWidget {
+  const YearLabel({
     super.key,
     required this.yearNumber,
     required this.onTap,
