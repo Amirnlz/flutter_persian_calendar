@@ -48,7 +48,6 @@ class PDayCalendar extends StatelessWidget {
           child: ItemsListViewWidget(
             itemsCount: (endDay - startDay) + 1,
             maxPerRow: 7,
-            textDirection: TextDirection.rtl,
             emptyBoxWidget: SizedBox(
               height: calendarTheme.itemHeight,
               width: calendarTheme.dayItemWidth,

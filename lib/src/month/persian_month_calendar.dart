@@ -30,7 +30,6 @@ class PMonthCalendar extends StatelessWidget {
         height: calendarTheme.itemHeight,
         width: calendarTheme.monthItemWidth,
       ),
-      textDirection: TextDirection.rtl,
       indexItemWidget: (index) {
         final monthItem = startMonth + index;
         final isSelected = monthItem == selectedMonth;

@@ -10,7 +10,6 @@ class ItemsListViewWidget extends StatelessWidget {
     required this.itemsCount,
     required this.maxPerRow,
     required this.indexItemWidget,
-    required this.textDirection,
     this.emptyBoxWidget,
   });
 
@@ -19,7 +18,6 @@ class ItemsListViewWidget extends StatelessWidget {
   final int itemsCount;
   final int maxPerRow;
   final Widget Function(int index) indexItemWidget;
-  final TextDirection textDirection;
   final Widget? emptyBoxWidget;
 
   @override
@@ -28,37 +26,33 @@ class ItemsListViewWidget extends StatelessWidget {
 
     final items = List.generate(itemsCount, (index) => index);
 
-    return Directionality(
-      textDirection: textDirection,
-      child: ListView.separated(
-        controller: scrollController,
-        shrinkWrap: true,
-        itemCount: numRows,
-        separatorBuilder: (context, index) => Padding(
-          padding: EdgeInsets.only(bottom: bottomPaddingSize),
-        ),
-        itemBuilder: (context, rowIndex) {
-          final start = rowIndex * maxPerRow;
-          final end = min(start + maxPerRow, itemsCount);
-          final rowItems = items.sublist(start, end);
-
-          final itemLefts = maxPerRow - rowItems.length;
-
-          return Row(
-            textDirection: textDirection,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ...List.generate(
-                  rowItems.length, (index) => indexItemWidget(rowItems[index])),
-              if (itemLefts > 0)
-                ...List.generate(
-                  itemLefts,
-                  (index) => emptyBoxWidget ?? const SizedBox(),
-                ),
-            ],
-          );
-        },
+    return ListView.separated(
+      controller: scrollController,
+      shrinkWrap: true,
+      itemCount: numRows,
+      separatorBuilder: (context, index) => Padding(
+        padding: EdgeInsets.only(bottom: bottomPaddingSize),
       ),
+      itemBuilder: (context, rowIndex) {
+        final start = rowIndex * maxPerRow;
+        final end = min(start + maxPerRow, itemsCount);
+        final rowItems = items.sublist(start, end);
+
+        final itemLefts = maxPerRow - rowItems.length;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ...List.generate(
+                rowItems.length, (index) => indexItemWidget(rowItems[index])),
+            if (itemLefts > 0)
+              ...List.generate(
+                itemLefts,
+                (index) => emptyBoxWidget ?? const SizedBox(),
+              ),
+          ],
+        );
+      },
     );
   }
 }

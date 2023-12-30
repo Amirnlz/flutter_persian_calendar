@@ -45,7 +45,6 @@ class _PYearCalendarState extends State<PYearCalendar> {
     return ItemsListViewWidget(
       scrollController: _scrollController,
       maxPerRow: yearMaxPerRow,
-      textDirection: TextDirection.ltr,
       itemsCount: (widget.endYearAt - widget.startYearFrom) + 1,
       emptyBoxWidget: SizedBox(
         height: widget.calendarTheme.itemHeight,
