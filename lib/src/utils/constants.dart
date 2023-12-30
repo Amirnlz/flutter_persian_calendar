@@ -22,3 +22,12 @@ const monthNames = [
   'بهمن',
   'اسفند',
 ];
+const weekShortNames = [
+  'ش',
+  'ی',
+  'د',
+  'س',
+  'چ',
+  'پ',
+  'ج',
+];

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../base_widgets/item_box.dart';
 import '../base_widgets/items_list_view_widget.dart';
 import '../theme/shamsi_date_picker_theme.dart';
+import '../utils/constants.dart';
 import 'day_confirmation_button.dart';
 
 class PDayCalendar extends StatelessWidget {
@@ -28,11 +29,26 @@ class PDayCalendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            weekShortNames.length,
+            (index) => SizedBox(
+              width: calendarTheme.dayItemWidth,
+              child: Text(
+                weekShortNames[index],
+                textAlign: TextAlign.center,
+                style: weekNameTextStyle,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
         Expanded(
           child: ItemsListViewWidget(
             itemsCount: (endDay - startDay) + 1,
             maxPerRow: 7,
-            textDirection: TextDirection.ltr,
+            textDirection: TextDirection.rtl,
             emptyBoxWidget: SizedBox(
               height: calendarTheme.itemHeight,
               width: calendarTheme.dayItemWidth,
@@ -61,6 +77,12 @@ class PDayCalendar extends StatelessWidget {
           confirmButtonText: confirmButtonText,
         ),
       ],
+    );
+  }
+
+  TextStyle get weekNameTextStyle {
+    return calendarTheme.textStyle.copyWith(
+      color: Colors.white70,
     );
   }
 
