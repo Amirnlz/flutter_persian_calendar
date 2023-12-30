@@ -8,7 +8,7 @@ homepage: https://github.com/Amirnlz/flutter_persian_calendar
 version: 0.0.2
 
 environment:
-  sdk: ">=3.2.3 <4.0.0"
+  sdk: ">=2.17.0 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
