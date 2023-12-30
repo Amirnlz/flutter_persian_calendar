@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart';
 import '../theme/shamsi_date_picker_theme.dart';
+import '../utils/constants.dart';
 import 'calendar_header_widget.dart';
+import 'calendar_widget.dart';
 
 class CalendarBaseWidget extends StatelessWidget {
   const CalendarBaseWidget({
@@ -10,8 +11,6 @@ class CalendarBaseWidget extends StatelessWidget {
     required this.calendarHeight,
     required this.calendarWidth,
     required this.shamsiDatePickerTheme,
-    required this.year,
-    required this.monthNumber,
     required this.onMonthHeaderTapped,
     required this.onYearHeaderTapped,
     required this.child,
@@ -20,15 +19,13 @@ class CalendarBaseWidget extends StatelessWidget {
   final double calendarHeight;
   final double calendarWidth;
   final PersianCalendarTheme shamsiDatePickerTheme;
-  final int year;
-  final int monthNumber;
   final VoidCallback onMonthHeaderTapped;
   final VoidCallback onYearHeaderTapped;
-
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final selectedDate = context.calendar!.selectedDate;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -42,8 +39,8 @@ class CalendarBaseWidget extends StatelessWidget {
         child: Column(
           children: [
             CalendarHeaderWidget(
-              year: year,
-              monthNumber: monthNumber,
+              year: selectedDate.year,
+              monthNumber: selectedDate.month,
               onMonthHeaderTapped: onMonthHeaderTapped,
               onYearHeaderTapped: onYearHeaderTapped,
               calendarTheme: shamsiDatePickerTheme,

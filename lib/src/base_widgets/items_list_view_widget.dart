@@ -44,7 +44,9 @@ class ItemsListViewWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ...List.generate(
-                rowItems.length, (index) => indexItemWidget(rowItems[index])),
+              rowItems.length,
+              (index) => indexItemWidget(rowItems[index]),
+            ),
             if (itemLefts > 0)
               ...List.generate(
                 itemLefts,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
 import 'base_widgets/calendar_base_widget.dart';
+import 'base_widgets/calendar_widget.dart';
 import 'day/persian_day_calendar.dart';
 import 'month/persian_month_calendar.dart';
 import 'theme/shamsi_date_picker_theme.dart';
@@ -65,19 +66,22 @@ class _PersianCalendarState extends State<PersianCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return CalendarBaseWidget(
-      calendarHeight: widget.calendarHeight,
-      calendarWidth: widget.calendarWidth,
-      shamsiDatePickerTheme: widget.calendarTheme,
-      year: selectedDate.year,
-      monthNumber: selectedDate.month,
-      onMonthHeaderTapped: () {
-        changeView(DatePickerView.month);
-      },
-      onYearHeaderTapped: () {
-        changeView(DatePickerView.year);
-      },
-      child: _changeDatePickerView(),
+    return CalendarWidget(
+      selectedDate: selectedDate,
+      calendarStartDate: widget.calendarStartDate,
+      calendarEndDate: widget.calendarEndDate,
+      child: CalendarBaseWidget(
+        calendarHeight: widget.calendarHeight,
+        calendarWidth: widget.calendarWidth,
+        shamsiDatePickerTheme: widget.calendarTheme,
+        onMonthHeaderTapped: () {
+          changeView(DatePickerView.month);
+        },
+        onYearHeaderTapped: () {
+          changeView(DatePickerView.year);
+        },
+        child: _changeDatePickerView(),
+      ),
     );
   }
 
@@ -85,9 +89,6 @@ class _PersianCalendarState extends State<PersianCalendar> {
     switch (activeDatePickerView) {
       case DatePickerView.year:
         return PYearCalendar(
-          selectedYear: selectedDate.year,
-          startYearFrom: widget.calendarStartDate.year,
-          endYearAt: widget.calendarEndDate.year,
           onYearChanged: (selectedYear) {
             changeView(DatePickerView.month);
             changeSelectedDate(year: selectedYear);
@@ -97,9 +98,6 @@ class _PersianCalendarState extends State<PersianCalendar> {
 
       case DatePickerView.month:
         return PMonthCalendar(
-          selectedMonth: selectedDate.month,
-          startMonth: startMonthDatePicker,
-          endMonth: endMonthDatePicker,
           onMonthChanged: (selectedMonth) {
             changeView(DatePickerView.day);
             changeSelectedDate(month: selectedMonth);
@@ -109,9 +107,6 @@ class _PersianCalendarState extends State<PersianCalendar> {
 
       case DatePickerView.day:
         return PDayCalendar(
-          selectedDay: selectedDate.day,
-          startDay: startDayDatePicker,
-          endDay: endDayDatePicker,
           onDayChanged: (selectedDay) {
             changeSelectedDate(day: selectedDay);
           },
@@ -140,37 +135,5 @@ class _PersianCalendarState extends State<PersianCalendar> {
       selectedDate = newJalaliDate;
     });
     // });
-  }
-
-  int get startMonthDatePicker {
-    if (selectedDate.year == widget.calendarStartDate.year) {
-      return widget.calendarStartDate.month;
-    } else {
-      return 1;
-    }
-  }
-
-  int get endMonthDatePicker {
-    if (selectedDate.year == widget.calendarEndDate.year) {
-      return widget.calendarEndDate.month;
-    } else {
-      return 12;
-    }
-  }
-
-  int get startDayDatePicker {
-    if (selectedDate.year == widget.calendarStartDate.year) {
-      return widget.calendarStartDate.day;
-    } else {
-      return 1;
-    }
-  }
-
-  int get endDayDatePicker {
-    if (selectedDate.year == widget.calendarEndDate.year) {
-      return widget.calendarEndDate.day;
-    } else {
-      return selectedDate.monthLength;
-    }
   }
 }

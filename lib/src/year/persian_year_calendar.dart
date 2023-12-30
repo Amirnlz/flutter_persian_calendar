@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../base_widgets/calendar_widget.dart';
 import '../base_widgets/item_box.dart';
 import '../base_widgets/items_list_view_widget.dart';
 import '../theme/shamsi_date_picker_theme.dart';
@@ -7,15 +8,9 @@ import '../theme/shamsi_date_picker_theme.dart';
 class PYearCalendar extends StatefulWidget {
   const PYearCalendar({
     super.key,
-    required this.selectedYear,
-    required this.startYearFrom,
-    required this.endYearAt,
     required this.onYearChanged,
     required this.calendarTheme,
   });
-  final int selectedYear;
-  final int startYearFrom;
-  final int endYearAt;
   final ValueChanged<int> onYearChanged;
   final PersianCalendarTheme calendarTheme;
 
@@ -24,13 +19,16 @@ class PYearCalendar extends StatefulWidget {
 }
 
 class _PYearCalendarState extends State<PYearCalendar> {
+  late final int selectedYear;
+  late final int startYearFrom;
+  late final int endYearAt;
+
   final int yearMaxPerRow = 3;
   late ScrollController _scrollController;
 
   @override
   void initState() {
     _scrollController = ScrollController();
-    _scrollToInitialFocusedDate();
     super.initState();
   }
 
@@ -42,17 +40,24 @@ class _PYearCalendarState extends State<PYearCalendar> {
 
   @override
   Widget build(BuildContext context) {
+    final calendar = context.calendar!;
+    selectedYear = calendar.selectedDate.year;
+    startYearFrom = calendar.calendarStartDate.year;
+    endYearAt = calendar.calendarEndDate.year;
+
+    _scrollToInitialFocusedDate();
+
     return ItemsListViewWidget(
       scrollController: _scrollController,
       maxPerRow: yearMaxPerRow,
-      itemsCount: (widget.endYearAt - widget.startYearFrom) + 1,
+      itemsCount: (endYearAt - startYearFrom) + 1,
       emptyBoxWidget: SizedBox(
         height: widget.calendarTheme.itemHeight,
         width: widget.calendarTheme.yearItemWidth,
       ),
       indexItemWidget: (index) {
-        final yearItem = widget.startYearFrom + index;
-        final isSelected = yearItem == widget.selectedYear;
+        final yearItem = startYearFrom + index;
+        final isSelected = yearItem == selectedYear;
 
         return ItemBox(
           itemTitle: yearItem.toString(),
@@ -79,7 +84,7 @@ class _PYearCalendarState extends State<PYearCalendar> {
   }
 
   double get scrollOffset {
-    final differenceYear = widget.selectedYear - widget.startYearFrom;
+    final differenceYear = selectedYear - startYearFrom;
     final scrollOffset =
         differenceYear * (widget.calendarTheme.itemHeight / 2.2);
     return scrollOffset;

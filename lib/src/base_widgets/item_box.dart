@@ -37,7 +37,7 @@ class ItemBox extends StatelessWidget {
         ),
         child: Text(
           itemTitle,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.end,
           style: textStyle,
         ),
       ),
