@@ -72,7 +72,8 @@ date.
 ## Screenshot
 
 Below is an example screenshot (layout and styling may vary based on theme and configuration):
-![Persian Calendar Banner](https://github.com/Amirnlz/flutter_persian_calendar/raw/master/sceenshots/banner.png)
+
+![Persian Calendar Banner](sceenshots/banner.png?raw=true)
 
 ---
 
