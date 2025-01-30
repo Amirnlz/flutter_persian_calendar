@@ -1,176 +1,97 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_persian_calendar/src/components/calendar_header.dart';
+import 'package:flutter_persian_calendar/src/main_calendar_view.dart';
+import 'package:flutter_persian_calendar/src/utils/constants.dart';
 import 'package:shamsi_date/shamsi_date.dart';
-
-import 'base_widgets/calendar_base_widget.dart';
-import 'day/persian_day_calendar.dart';
-import 'month/persian_month_calendar.dart';
-import 'theme/shamsi_date_picker_theme.dart';
-import 'utils/constants.dart';
-import 'year/persian_year_calendar.dart';
 
 class PersianCalendar extends StatefulWidget {
   const PersianCalendar({
+    this.height = 300.0,
+    this.initialDate,
+    this.startingDate,
+    this.endingDate,
+    this.onDateChanged,
+    this.backgroundColor,
+    this.primaryColor,
+    this.secondaryColor,
+    this.textStyle,
+    this.confirmButton,
     super.key,
-    required this.selectedDate,
-    required this.calendarStartDate,
-    required this.calendarEndDate,
-    this.calendarHeight = 360,
-    this.calendarWidth = 376,
-    required this.onDateChanged,
-    required this.calendarTheme,
-    this.confirmButtonText = 'تایید',
-    required this.onConfirmButtonPressed,
   });
 
-  /// The selected date in the calendar.
-  final Jalali selectedDate;
+  final double height;
 
-  /// The Calendar start from this date
-  final Jalali calendarStartDate;
+  /// Defaults to Jalali.now()
+  final Jalali? initialDate;
 
-  /// The Calendar ends to this date
-  final Jalali calendarEndDate;
+  /// Defaults  = 1300/1/1
+  final Jalali? startingDate;
 
-  /// The height of the calendar widget.
-  final double calendarHeight;
+  /// Defaults  = 1405/1/1
+  final Jalali? endingDate;
 
-  /// The width of the calendar widget.
-  final double calendarWidth;
+  /// Callback when final date is confirmed (or selected).
+  final ValueChanged<Jalali>? onDateChanged;
+  final Color? backgroundColor;
+  final Color? primaryColor;
+  final Color? secondaryColor;
+  final TextStyle? textStyle;
 
-  /// On every time user change date
-  final ValueChanged<Jalali> onDateChanged;
-
-  /// The calendar theme for customize
-  final PersianCalendarTheme calendarTheme;
-
-  /// The confirm button text shown in day widget
-  final String confirmButtonText;
-
-  /// Called when user pressed on Confirm button
-  final VoidCallback onConfirmButtonPressed;
+  /// If null, an ElevatedButton is shown by default
+  final Widget? confirmButton;
 
   @override
   State<PersianCalendar> createState() => _PersianCalendarState();
 }
 
 class _PersianCalendarState extends State<PersianCalendar> {
-  DatePickerView activeDatePickerView = DatePickerView.year;
-  late Jalali selectedDate;
+  late Jalali _selectedDate;
 
   @override
   void initState() {
     super.initState();
-    selectedDate = widget.selectedDate;
+    _selectedDate = widget.initialDate ?? Jalali.now();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CalendarBaseWidget(
-      calendarHeight: widget.calendarHeight,
-      calendarWidth: widget.calendarWidth,
-      shamsiDatePickerTheme: widget.calendarTheme,
-      year: selectedDate.year,
-      monthNumber: selectedDate.month,
-      onMonthHeaderTapped: () {
-        changeView(DatePickerView.month);
-      },
-      onYearHeaderTapped: () {
-        changeView(DatePickerView.year);
-      },
-      child: _changeDatePickerView(),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Container(
+        height: widget.height,
+        padding: kPadding,
+        decoration: BoxDecoration(
+          color:
+              widget.backgroundColor ?? Theme.of(context).colorScheme.surface,
+        ),
+        child: Column(
+          children: [
+            CalendarHeader(
+              selectedDate: _selectedDate,
+              secondaryColor: widget.secondaryColor ??
+                  Theme.of(context).colorScheme.secondaryContainer,
+              textStyle: _textStyle(context),
+            ),
+            const SizedBox(height: 16.0),
+            Expanded(
+              child: MainCalendarView(
+                selectedDate: _selectedDate,
+                startingDate: widget.startingDate,
+                endingDate: widget.endingDate,
+                primaryColor: widget.primaryColor,
+                textStyle: widget.textStyle,
+                onDateChanged: (value) {
+                  setState(() => _selectedDate = value);
+                  widget.onDateChanged?.call(value);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _changeDatePickerView() {
-    switch (activeDatePickerView) {
-      case DatePickerView.year:
-        return PYearCalendar(
-          selectedYear: selectedDate.year,
-          startYearFrom: widget.calendarStartDate.year,
-          endYearAt: widget.calendarEndDate.year,
-          onYearChanged: (selectedYear) {
-            changeView(DatePickerView.month);
-            changeSelectedDate(year: selectedYear);
-          },
-          calendarTheme: widget.calendarTheme,
-        );
-
-      case DatePickerView.month:
-        return PMonthCalendar(
-          selectedMonth: selectedDate.month,
-          startMonth: startMonthDatePicker,
-          endMonth: endMonthDatePicker,
-          onMonthChanged: (selectedMonth) {
-            changeView(DatePickerView.day);
-            changeSelectedDate(month: selectedMonth);
-          },
-          calendarTheme: widget.calendarTheme,
-        );
-
-      case DatePickerView.day:
-        return PDayCalendar(
-          selectedDay: selectedDate.day,
-          startDay: startDayDatePicker,
-          endDay: endDayDatePicker,
-          onDayChanged: (selectedDay) {
-            changeSelectedDate(day: selectedDay);
-          },
-          calendarTheme: widget.calendarTheme,
-          confirmButtonText: widget.confirmButtonText,
-          onConfirmButtonPressed: widget.onConfirmButtonPressed,
-        );
-    }
-  }
-
-  void changeView(DatePickerView view) {
-    setState(() {
-      activeDatePickerView = view;
-    });
-  }
-
-  void changeSelectedDate({int? year, int? month, int? day}) {
-    // setState(() {
-    final newJalaliDate = Jalali(
-      year ?? selectedDate.year,
-      month ?? selectedDate.month,
-      day ?? selectedDate.day,
-    );
-    widget.onDateChanged(newJalaliDate);
-    setState(() {
-      selectedDate = newJalaliDate;
-    });
-    // });
-  }
-
-  int get startMonthDatePicker {
-    if (selectedDate.year == widget.calendarStartDate.year) {
-      return widget.calendarStartDate.month;
-    } else {
-      return 1;
-    }
-  }
-
-  int get endMonthDatePicker {
-    if (selectedDate.year == widget.calendarEndDate.year) {
-      return widget.calendarEndDate.month;
-    } else {
-      return 12;
-    }
-  }
-
-  int get startDayDatePicker {
-    if (selectedDate.year == widget.calendarStartDate.year) {
-      return widget.calendarStartDate.day;
-    } else {
-      return 1;
-    }
-  }
-
-  int get endDayDatePicker {
-    if (selectedDate.year == widget.calendarEndDate.year) {
-      return widget.calendarEndDate.day;
-    } else {
-      return selectedDate.monthLength;
-    }
-  }
+  TextStyle? _textStyle(BuildContext context) =>
+      widget.textStyle ?? Theme.of(context).textTheme.titleSmall;
 }
