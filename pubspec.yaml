@@ -5,7 +5,7 @@ description: >
 repository: https://github.com/Amirnlz/flutter_persian_calendar
 homepage: https://github.com/Amirnlz/flutter_persian_calendar
 
-version: 0.0.2
+version: 0.0.3
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
