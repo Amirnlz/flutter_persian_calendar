@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_persian_calendar/src/components/calendar_header.dart';
 import 'package:flutter_persian_calendar/src/main_calendar_view.dart';
 import 'package:flutter_persian_calendar/src/utils/constants.dart';
+import 'package:flutter_persian_calendar/src/utils/extensions.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
 class PersianCalendar extends StatefulWidget {
@@ -19,6 +20,7 @@ class PersianCalendar extends StatefulWidget {
     super.key,
   });
 
+  /// set height for the widget
   final double height;
 
   /// Defaults to Jalali.now()
@@ -47,6 +49,9 @@ class PersianCalendar extends StatefulWidget {
 class _PersianCalendarState extends State<PersianCalendar> {
   late Jalali _selectedDate;
 
+  /// Keep track of which grid to show
+  CalendarViewMode _viewMode = CalendarViewMode.year;
+
   @override
   void initState() {
     super.initState();
@@ -61,8 +66,8 @@ class _PersianCalendarState extends State<PersianCalendar> {
         height: widget.height,
         padding: kPadding,
         decoration: BoxDecoration(
-          color:
-              widget.backgroundColor ?? Theme.of(context).colorScheme.surface,
+          color: widget.backgroundColor ??
+              Theme.of(context).colorScheme.surfaceContainer,
         ),
         child: Column(
           children: [
@@ -71,20 +76,37 @@ class _PersianCalendarState extends State<PersianCalendar> {
               secondaryColor: widget.secondaryColor ??
                   Theme.of(context).colorScheme.secondaryContainer,
               textStyle: _textStyle(context),
+              onViewChanged: (value) => setState(() => _viewMode = value),
             ),
-            const SizedBox(height: 16.0),
             Expanded(
-              child: MainCalendarView(
-                selectedDate: _selectedDate,
-                startingDate: widget.startingDate,
-                endingDate: widget.endingDate,
-                primaryColor: widget.primaryColor,
-                textStyle: widget.textStyle,
-                onDateChanged: (value) {
-                  setState(() => _selectedDate = value);
-                  widget.onDateChanged?.call(value);
-                },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: MainCalendarView(
+                  viewMode: _viewMode,
+                  selectedDate: _selectedDate,
+                  startingDate: widget.startingDate,
+                  endingDate: widget.endingDate,
+                  primaryColor: widget.primaryColor,
+                  textStyle: widget.textStyle,
+                  onViewChanged: (value) => setState(() => _viewMode = value),
+                  onDateChanged: (value) {
+                    setState(() => _selectedDate = value);
+                    widget.onDateChanged?.call(value);
+                  },
+                ),
               ),
+            ),
+            Visibility(
+              visible: widget.confirmButton != null,
+              replacement: ElevatedButton(
+                onPressed: () {},
+                style: const ButtonStyle(
+                  fixedSize:
+                      WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+                ),
+                child: const Text('تایید'),
+              ),
+              child: widget.confirmButton ?? const SizedBox.shrink(),
             ),
           ],
         ),

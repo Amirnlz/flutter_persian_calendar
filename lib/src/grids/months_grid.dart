@@ -24,19 +24,20 @@ class MonthsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CalendarGrid<int>(
+    return CalendarGrid<String>(
       items: List.generate(
         _endMonth - _startMonth + 1,
-        (index) => index,
+        (index) => monthNames[index],
       ),
       itemsPerRow: 3,
-      itemBuilder: (context, monthIndex, index) {
+      itemBuilder: (context, month, index) {
+        final fixedIndex = index + 1;
         return GestureDetector(
           onTap: () =>
-              onMonthChanged != null ? onMonthChanged!(monthIndex + 1) : null,
+              onMonthChanged != null ? onMonthChanged!(fixedIndex) : null,
           child: ItemBox(
-            value: monthNames[monthIndex],
-            color: selectedDate.month == (monthIndex + 1) ? itemColor : null,
+            value: month,
+            color: selectedDate.month == (fixedIndex) ? itemColor : null,
             textStyle: textStyle,
           ),
         );

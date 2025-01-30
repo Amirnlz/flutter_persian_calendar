@@ -8,20 +8,24 @@ import 'package:shamsi_date/shamsi_date.dart';
 
 class MainCalendarView extends StatefulWidget {
   const MainCalendarView({
+    required this.viewMode,
     required this.selectedDate,
     this.startingDate,
     this.endingDate,
     this.primaryColor,
     this.textStyle,
+    this.onViewChanged,
     this.onDateChanged,
     super.key,
   });
 
+  final CalendarViewMode viewMode;
   final Jalali selectedDate;
   final Jalali? startingDate;
   final Jalali? endingDate;
   final Color? primaryColor;
   final TextStyle? textStyle;
+  final ValueChanged<CalendarViewMode>? onViewChanged;
   final ValueChanged<Jalali>? onDateChanged;
 
   @override
@@ -32,9 +36,6 @@ class _MainCalendarViewState extends State<MainCalendarView> {
   late Jalali _selectedDate;
   late Jalali _startDate;
   late Jalali _endDate;
-
-  /// Keep track of which grid to show
-  CalendarViewMode _viewMode = CalendarViewMode.year;
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _MainCalendarViewState extends State<MainCalendarView> {
     final itemColor =
         widget.primaryColor ?? Theme.of(context).colorScheme.primaryContainer;
     final textStyle = _textStyle(context);
-    return switch (_viewMode) {
+    return switch (widget.viewMode) {
       CalendarViewMode.year => YearsGrid(
           selectedYear: _selectedDate.year,
           startingYear: _startDate.year,
@@ -90,7 +91,7 @@ class _MainCalendarViewState extends State<MainCalendarView> {
       final fixedDay = _selectedDate.day;
       _selectedDate = Jalali(year, fixedMonth, fixedDay);
       widget.onDateChanged?.call(_selectedDate);
-      _viewMode = CalendarViewMode.month;
+      widget.onViewChanged?.call(CalendarViewMode.month);
     });
   }
 
@@ -105,8 +106,7 @@ class _MainCalendarViewState extends State<MainCalendarView> {
 
       _selectedDate = Jalali(_selectedDate.year, month, newDay);
       widget.onDateChanged?.call(_selectedDate);
-
-      _viewMode = CalendarViewMode.day;
+      widget.onViewChanged?.call(CalendarViewMode.day);
     });
   }
 
