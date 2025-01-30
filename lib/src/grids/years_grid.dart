@@ -22,18 +22,26 @@ class YearsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // We'll generate all possible years from startingYear to endingYear inclusive
+    final years = List.generate(
+      (endingYear - startingYear + 1),
+      (index) => startingYear + index,
+    );
+
+    // Find the index of the selected year in that list
+    // if selectedYear isn’t in the list for some reason, selectedIndex will be -1
+    final selectedIndex = years.indexOf(selectedYear);
+
     return CalendarGrid<int>(
-      items: List.generate(
-        endingYear - startingYear,
-        (index) => startingYear + index,
-      ),
+      items: years,
       itemsPerRow: 3,
+      scrollToIndex: (selectedIndex >= 0) ? selectedIndex : null,
       itemBuilder: (context, year, index) {
         return GestureDetector(
-          onTap: () => onYearChanged != null ? onYearChanged!(year) : null,
+          onTap: () => onYearChanged?.call(year),
           child: ItemBox(
             value: year.toString(),
-            color: selectedYear == year ? itemColor : null,
+            color: (year == selectedYear) ? itemColor : null,
             textStyle: textStyle,
           ),
         );

@@ -14,30 +14,7 @@ typedef SeparatorWidgetBuilder<T> = Widget? Function(
   int index,
 );
 
-class CalendarGrid<T> extends StatelessWidget {
-  /// The data items to be displayed in the grid.
-  final List<T> items;
-
-  /// How many items to display per row.
-  final int itemsPerRow;
-
-  /// Called to build each item in the grid.
-  final ItemWidgetBuilder<T> itemBuilder;
-
-  /// Called to build a separator between items, optional.
-  final SeparatorWidgetBuilder<T>? separatorBuilder;
-
-  /// If you want more control over scroll behavior or other aspects,
-  /// you can expose them as well.
-  final bool shrinkWrap;
-  final ScrollPhysics? physics;
-  final EdgeInsetsGeometry padding;
-
-  /// Additional parameters you might want: spacing, alignment, etc.
-  final double mainAxisSpacing;
-  final double crossAxisSpacing;
-  final double childAspectRatio;
-
+class CalendarGrid<T> extends StatefulWidget {
   const CalendarGrid({
     required this.items,
     required this.itemsPerRow,
@@ -49,51 +26,111 @@ class CalendarGrid<T> extends StatelessWidget {
     this.mainAxisSpacing = 0,
     this.crossAxisSpacing = 0,
     this.childAspectRatio = 1.0,
+    this.scrollToIndex,
     super.key,
   });
 
+  /// The data items to be displayed in the grid.
+  final List<T> items;
+
+  /// How many items per row (e.g. 3 for years/months, 7 for days).
+  final int itemsPerRow;
+
+  /// Builds each grid item.
+  final ItemWidgetBuilder<T> itemBuilder;
+
+  /// Optionally builds a separator overlay. (Omitted for brevity here.)
+  final IndexedWidgetBuilder? separatorBuilder;
+
+  final bool shrinkWrap;
+  final ScrollPhysics? physics;
+  final EdgeInsetsGeometry padding;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+
+  /// width : height ratio = `childAspectRatio : 1`
+  /// If = 3.0, it means itemWidth / itemHeight = 3 => itemHeight = itemWidth / 3
+  final double childAspectRatio;
+
+  /// The index you want to scroll to on first build, if any.
+  /// For example, if you want to jump to the selected year's index.
+  final int? scrollToIndex;
+
+  @override
+  State<CalendarGrid<T>> createState() => _CalendarGridState<T>();
+}
+
+class _CalendarGridState<T> extends State<CalendarGrid<T>> {
+  late final ScrollController _scrollController;
+  bool _didScrollInitially = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: shrinkWrap,
-      physics: physics,
-      padding: padding,
-      itemCount: items.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: itemsPerRow,
-        mainAxisSpacing: mainAxisSpacing,
-        crossAxisSpacing: crossAxisSpacing,
-        childAspectRatio: childAspectRatio,
-      ),
-      itemBuilder: (context, index) {
-        final item = items[index];
+    return LayoutBuilder(
+      builder: (ctx, constraints) {
+        // Once the layout constraints are known, we can compute the offset
+        // in a post frame callback.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _jumpToInitialIndexIfNeeded(constraints);
+        });
 
-        // Build the main item
-        final itemWidget = itemBuilder(context, item, index);
-
-        // If we have no separatorBuilder, just return the item.
-        if (separatorBuilder == null) {
-          return itemWidget;
-        }
-
-        // Otherwise, see if we need to build a separator for this item.
-        // For example, you might only want to place a separator
-        // on the right or bottom side. This is flexible.
-        final separatorWidget = separatorBuilder!(context, item, index);
-
-        // If no separator, return the item as is.
-        if (separatorWidget == null) {
-          return itemWidget;
-        }
-
-        // If you do have a separator, you can stack them or place them in a Column/Row, etc.
-        return Stack(
-          children: [
-            itemWidget,
-            Positioned.fill(child: separatorWidget),
-          ],
+        return GridView.builder(
+          controller: _scrollController,
+          shrinkWrap: widget.shrinkWrap,
+          physics: widget.physics,
+          padding: widget.padding,
+          itemCount: widget.items.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: widget.itemsPerRow,
+            mainAxisSpacing: widget.mainAxisSpacing,
+            crossAxisSpacing: widget.crossAxisSpacing,
+            childAspectRatio: widget.childAspectRatio,
+          ),
+          itemBuilder: (context, index) {
+            final item = widget.items[index];
+            return widget.itemBuilder(context, item, index);
+          },
         );
       },
+    );
+  }
+
+  void _jumpToInitialIndexIfNeeded(BoxConstraints constraints) {
+    if (_didScrollInitially) return;
+    _didScrollInitially = true; // so we only do it once
+
+    final targetIndex = widget.scrollToIndex;
+    if (targetIndex == null) return; // no scroll requested
+
+    // 1) Compute which row the target index is on.
+    final rowIndex = targetIndex ~/ widget.itemsPerRow;
+
+    // 2) Calculate each cell's width and height.
+    final horizontalPadding =
+        widget.padding.resolve(TextDirection.rtl).horizontal;
+    final usableWidth = constraints.maxWidth - horizontalPadding;
+    final totalCrossSpacing =
+        widget.crossAxisSpacing * (widget.itemsPerRow - 1);
+
+    // The 'childAspectRatio' = (itemWidth / itemHeight).
+    // => itemHeight = itemWidth / childAspectRatio
+    final itemWidth = (usableWidth - totalCrossSpacing) / widget.itemsPerRow;
+    final itemHeight = itemWidth / widget.childAspectRatio;
+
+    // 3) The offset is rowIndex * (itemHeight + mainAxisSpacing).
+    final offset = rowIndex * (itemHeight + widget.mainAxisSpacing);
+
+    // 4) Jump or animate.
+    _scrollController.animateTo(
+      offset.clamp(0, _scrollController.position.maxScrollExtent),
+      duration: const Duration(milliseconds: 800),
+      curve: Easing.linear,
     );
   }
 }
