@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_persian_calendar/flutter_persian_calendar.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
-import 'constants.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -46,7 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -62,60 +61,13 @@ class _MyHomePageState extends State<MyHomePage> {
               'selected Date: $selectedText',
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      child:
-                          shamsiDateCalendarWidget(context, calendarDarkTheme),
-                    );
-                  },
-                );
-              },
-              child: const Text('Select Date(With Dark Theme)'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      child:
-                          shamsiDateCalendarWidget(context, calendarLightTheme),
-                    );
-                  },
-                );
-              },
-              child: const Text('Select Date(With Light Theme)'),
+            PersianCalendar(
+              initialDate: selectedDate,
+              onDateChanged: (value) => setState(() => selectedDate = value),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  PersianCalendar shamsiDateCalendarWidget(
-    BuildContext context,
-    PersianCalendarTheme calendarTheme,
-  ) {
-    return PersianCalendar(
-      calendarHeight: 376,
-      calendarWidth: 360,
-      selectedDate: selectedDate,
-      onDateChanged: (newDate) {
-        setState(() {
-          selectedDate = newDate;
-        });
-      },
-      onConfirmButtonPressed: () {
-        Navigator.pop(context);
-      },
-      calendarStartDate: Jalali(1300, 4, 12),
-      calendarEndDate: Jalali(1402, 7, 10),
-      calendarTheme: calendarTheme,
     );
   }
 

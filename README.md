@@ -1,137 +1,146 @@
-# Flutter Persian Calendar: A Widget for Jalali (Persian) Date Display
+# PersianCalendar
 
-![Persian Calendar Banner](https://github.com/Amirnlz/flutter_persian_calendar/raw/master/sceenshots/darkTheme.png)
-
+A lightweight yet powerful **Persian (Jalali) date picker** widget for Flutter.  
+Easily allow your users to select years, months, and days in a beautiful, localized, and scrollable
+Jalali calendar UI.
 [![pub package](https://img.shields.io/pub/v/flutter_persian_calendar.svg?color=%23e67e22&label=pub&logo=flutter_persian_calendar)](https://pub.dev/packages/flutter_persian_calendar)
 
-This Flutter package provides a simple and customizable Persian calendar widget for easy integration into your Flutter project. The package is based on [shamsi_date](https://pub.dev/packages/shamsi_date).
+---
 
 ## Features
 
-- **Filter Start and End Date:** You can add start-date and end-date to filter showing dates.
-- **Customization Options:** Tailor the appearance of the calendar to fit your application's theme with customizable options.
+- **Jalali Calendar**: All you need for selecting Persian (Jalali) dates.
+- **Flexible UI**: Customizable background, primary, and secondary colors, plus text styles.
+- **Configurable**: Pass your own `onDateChanged` callback, a `confirmButton`, or rely on defaults.
+- **Scrolling**: Allows navigation across a wide date range via year, month, day views.
+- **Built-in Localization**: Directionality is set to RTL automatically for Persian.
 
-## Usage
+---
 
-Add it to your pubspec.yaml file:
+## Installation
 
-```yaml
-dependencies:
+1. Add this package to your `pubspec.yaml`:
+   ```yaml
+   dependencies:
+     persian_calendar: ^0.0.3
+   ```
+2. Run `flutter pub get`.
+3. Import it in your Dart code:
+   ```dart
+   import 'package:persian_calendar/persian_calendar.dart';
+   ```
 
-flutter_persian_calendar: ^0.0.2
-```
+---
 
-Then, run the following command in your terminal:
+## Quick Start
 
-```terminal
-flutter pub get
-```
-
-In your library add the following import:
-
-```dart
-
-import  'package:flutter_persian_calendar/flutter_persian_calendar.dart';
-
-```
-
-check example to use:
+Below is a minimal example showing how to embed the **PersianCalendar** widget in your app:
 
 ```dart
-//import package at top of class
-import  'package:flutter_persian_calendar/flutter_persian_calendar.dart';
+import 'package:flutter/material.dart';
+import 'package:shamsi_date/shamsi_date.dart'; // or your Jalali library
+import 'package:persian_calendar/persian_calendar.dart';
 
- //Create a button to user tap on it and show calendar to select date
-ElevatedButton(
-   onPressed: () {
-    //Show calendar in Dialog
-     showDialog(
-       context: context,
-       builder: (context) {
-         return Dialog(
-           child:
-               shamsiDateCalendarWidget(context, calendarDarkTheme),
-         );
-       },
-     );
-   },
-   child: const Text('Select Date'),
- );
+class CalendarExample extends StatelessWidget {
+  const CalendarExample({super.key});
 
-//Can create a base Calendar widget to show with different Themes
-  PersianCalendar shamsiDateCalendarWidget(
-    BuildContext context,
-    //Pass different Theme
-    PersianCalendarTheme calendarTheme,
-  ) {
-    return PersianCalendar(
-      calendarHeight: 376, //set height of calendar widget to 376
-      calendarWidth: 360, //set width of calendar widget to 360
-      selectedDate: selectedDate, // the selected date shown in initializing calendar widget
-      onDateChanged: (newDate) {
-        // type of newDate and selectedDate should be Jalali
-          selectedDate = newDate; // set the selectedDate to new selected date
-      },
-      onConfirmButtonPressed: () {
-        Navigator.pop(context); // pop widget when user press on confirm button
-      },
-      calendarStartDate: Jalali(1300, 4, 12), // show calendar from 1300/4/12
-      calendarEndDate: Jalali(1402, 7, 10), // show calendar until 1402/7/10
-      calendarTheme: calendarTheme, // set calendarTheme that is passed here
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Persian Calendar Example')),
+      body: Center(
+        child: PersianCalendar(
+          initialDate: Jalali(1402, 12, 25), // Optional: Defaults to Jalali.now()
+          startingDate: Jalali(1300, 1, 1), // Optional range start
+          endingDate: Jalali(1405, 1, 1), // Optional range end
+          onDateChanged: (selectedDate) {
+            debugPrint('Selected date: $selectedDate');
+          },
+        ),
+      ),
     );
   }
-
+}
 ```
 
-## Customization
+This immediately displays a Jalali calendar that defaults to the specified `initialDate`. When the
+user taps through the year, month, and day selections, `onDateChanged` will trigger with the final
+date.
 
-You can change colors, textStyle, and the height and width of items in `PersianCalendarTheme`. Here is a customized lightTheme:
+---
+
+## Screenshot
+
+Below is an example screenshot (layout and styling may vary based on theme and configuration):
+
+![Persian Calendar Banner](sceenshots/banner.png?raw=true)
+
+---
+
+## Advanced Usage
+
+### 1. Custom Height & Colors
+
+If you need to tweak the height or change the colors:
 
 ```dart
- // Model of calendar Theme
-PersianCalendarTheme(
-  backgroundColor: const Color(0XFFEDF2F4),
-  selectedColor: const Color(0XFFEF233C),
-  headerBackgroundColor: const Color(0XFF8D99AE),
-  textStyle: const TextStyle(
-    fontSize: 14,
-    color: Colors.black,
-  ),
-  selectedItemTextStyle: const TextStyle(
-    fontSize: 14,
-    color: Color(0XFFF2F2F2),
-  ),
-  confirmButtonTextStyle: const TextStyle(
-    fontSize: 14,
-    color: Color(0XFFF2F2F2),
-  ),
-  headerTextStyle: const TextStyle(
-    fontSize: 14,
-    color: Colors.black,
-  ),
-);
-
+PersianCalendar(
+  height: 350.0,
+  backgroundColor: Colors.grey.shade100,
+  primaryColor: Colors.pink.shade200,
+  secondaryColor: Colors.blue.shade200,
+  textStyle: const TextStyle(fontSize: 16, color: Colors.black87),
+  onDateChanged: (selectedDate) {
+  // do something interesting
+  },
+)
 ```
 
-Output screenshot:
+### 2. Custom Confirm Button
 
-![Persian Calendar Banner](https://github.com/Amirnlz/flutter_persian_calendar/raw/master/sceenshots/lightTheme.png)
+By default, if no `confirmButton` is provided, we show an `ElevatedButton` labeled "تایید". To inject
+your own button:
+```dart
+PersianCalendar(
+  onDateChanged: (selectedDate) {
+  debugPrint('User picked: $selectedDate');
+  },
+  confirmButton: ElevatedButton(
+  onPressed: () {
+  // Close dialog or do something else
+  debugPrint('User confirmed date selection');
+  },
+    child: const Text('Confirm'),
+  ),
+)
+```
+You decide how to handle the chosen date in your own UI flow.
 
-## Contributions
+### 3. Using in a Dialog
+To place the `PersianCalendar` inside a dialog:
+```dart
+Future<void> _showPersianCalendarDialog(BuildContext context) async {
+  return showDialog(
+    context: context,
+    builder: (dialogCtx) {
+      return AlertDialog(
+        content: PersianCalendar(
+          onDateChanged: (jalaliDate) {
+            debugPrint('Dialog - selected date: $jalaliDate');
+          },
+        ),
+      );
+    },
+  );
+}
+```
 
-We welcome contributions from the community! If you'd like to contribute to the development of Flutter Persian Calendar, please follow these guidelines:
+Then call `_showPersianCalendarDialog(context)` from anywhere in your widget tree (e.g., a button tap).
 
-### Reporting Issues
+---
 
-If you encounter any issues with the package or have suggestions for improvements, please open an issue on the [GitHub issue tracker](https://github.com/Amirnlz/flutter_persian_calendar/issues). When reporting issues, please provide detailed information about the problem, including steps to reproduce it and your environment (Flutter version, platform, etc.).
+## Contributing
 
-### Making Changes
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix: `git checkout -b feature/my-feature` or `git checkout -b bugfix/fix-issue`.
-3. Make your changes and test thoroughly.
-4. Commit your changes: `git commit -m 'Add some feature'`.
-5. Push to the branch: `git push origin feature/my-feature`.
-6. Submit a pull request.
-
-Feel free to use or modify this version based on your preferences!
+- Feel free to submit pull requests or file issues.
+- Add new features or improve the design.
+- Don’t forget to star the repository if you find it helpful (stars are surprisingly motivating, even for Persian Calendars!).
