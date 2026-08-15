@@ -3,6 +3,9 @@
 A lightweight yet powerful **Persian (Jalali) date picker** widget for Flutter.  
 Easily allow your users to select years, months, and days in a beautiful, localized, and scrollable
 Jalali calendar UI.
+
+[English](https://github.com/Amirnlz/flutter_persian_calendar/blob/master/README.md) | [Español](https://github.com/Amirnlz/flutter_persian_calendar/blob/master/README.es-ES.md)
+
 [![pub package](https://img.shields.io/pub/v/flutter_persian_calendar.svg?color=%23e67e22&label=pub&logo=flutter_persian_calendar)](https://pub.dev/packages/flutter_persian_calendar)
 
 ---
